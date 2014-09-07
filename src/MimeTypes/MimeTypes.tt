@@ -1,0 +1,73 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Net" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs.pp" #>
+<# var mediaTypes = GetMediaTypeList(); #>
+using System;
+using System.Collections.Generic;
+
+namespace $rootnamespace$
+{
+    public static class MimeTypes
+    {
+        private static readonly Dictionary<string, string> TypeMap;
+
+        static MimeTypes()
+        {
+            TypeMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+        <# foreach (var mediaType in mediaTypes) { #>
+        { "<#= mediaType.Item1 #>", "<#= mediaType.Item2 #>" },
+        <# } #>
+    };
+        }
+
+        public static string GetMimeType(string fileName)
+        {
+            string result = null;
+
+            var dotIndex = fileName.LastIndexOf('.');
+
+            if (dotIndex != -1 && fileName.Length > dotIndex + 1)
+            {
+                TypeMap.TryGetValue(fileName.Substring(dotIndex + 1), out result);
+            }
+
+            return result ?? "application/octet-stream";
+        }
+    }
+}
+<#+
+    private IList<Tuple<string, string>> GetMediaTypeList()
+    {
+        using (var client = new WebClient())
+        {
+            var list = client.DownloadString(new Uri("http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types"));
+
+            var lines = SplitString(list, '\r', '\n');
+
+            return GetMediaTypes(lines).ToList();
+        }
+    }
+
+    private IEnumerable<Tuple<string, string>> GetMediaTypes(IEnumerable<string> lines)
+    {
+        return lines.Where(x => !x.StartsWith("#"))
+            .Select(line => SplitString(line, '\t', ' '))
+            .SelectMany(CreateMediaTypes)
+            .OrderBy(x => x.Item1);
+    }
+
+    private string[] SplitString(string line, params char[] separator)
+    {
+        return line.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+    }
+
+    private IEnumerable<Tuple<string, string>> CreateMediaTypes(string[] parts)
+    {
+        return parts.Skip(1).Select(extension => Tuple.Create(extension, parts.First()));
+    }
+#>
