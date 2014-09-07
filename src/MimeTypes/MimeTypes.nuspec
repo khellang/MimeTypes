@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MimeTypes</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>MimeTypes.cs</title>
     <authors>Kristian Hellang</authors>
     <owners>Kristian Hellang</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/khellang/MimeTypes</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/khellang/MimeTypes/master/etc/nuget-icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A simple lookup from file extension to MIME type, generated from Apache's mime.types.</description>
+    <description>A simple lookup from file name/extension to MIME/media type, generated from Apache's mime.types.</description>
     <copyright>Copyright Kristian Hellang 2014</copyright>
     <developmentDependency>true</developmentDependency>
     <tags>MIME Media Types</tags>

@@ -997,6 +997,12 @@ namespace $rootnamespace$
             };
         }
 
+        /// <summary>
+        /// Gets the MIME type for the given file name,
+        /// or "application/octet-stream" if a mapping doesn't exist.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns>The MIME type for the given file name.</returns>
         public static string GetMimeType(string fileName)
         {
             string result = null;
