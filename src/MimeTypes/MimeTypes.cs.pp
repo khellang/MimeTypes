@@ -763,7 +763,6 @@ namespace $rootnamespace$
                 { "stl", "application/vnd.ms-pki.stl" },
                 { "str", "application/vnd.pg.format" },
                 { "stw", "application/vnd.sun.xml.writer.template" },
-                { "sub", "image/vnd.dvb.subtitle" },
                 { "sub", "text/vnd.dvb.subtitle" },
                 { "sus", "application/vnd.sus-calendar" },
                 { "susp", "application/vnd.sus-calendar" },
