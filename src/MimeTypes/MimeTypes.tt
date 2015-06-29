@@ -63,12 +63,13 @@ namespace $rootnamespace$
 
     private static IEnumerable<Tuple<string, string>> GetMediaTypes(IEnumerable<string> lines)
     {
-        var mediaTypes = lines.Where(x => !x.StartsWith("#"))
+        return lines.Where(x => !x.StartsWith("#"))
             .Select(line => SplitString(line, '\t', ' '))
             .SelectMany(CreateMediaTypes)
+			.GroupBy(x => x.Item1)
+			.Where(x => x.Count() == 1)
+			.Select(x => x.Single())
             .OrderBy(x => x.Item1);
-
-        return DistinctBy(mediaTypes, mediaType => mediaType.Item1, StringComparer.OrdinalIgnoreCase);
     }
 
     private static string[] SplitString(string line, params char[] separator)
@@ -79,10 +80,5 @@ namespace $rootnamespace$
     private static IEnumerable<Tuple<string, string>> CreateMediaTypes(string[] parts)
     {
         return parts.Skip(1).Select(extension => Tuple.Create(extension, parts.First()));
-    }
-
-    private static IEnumerable<TSource> DistinctBy<TSource, TKey>(IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey> equalityComparer)
-    {
-        return source.GroupBy(keySelector, equalityComparer).Select(x => x.First());
     }
 #>
