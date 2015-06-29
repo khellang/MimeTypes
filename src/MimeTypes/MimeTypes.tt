@@ -33,21 +33,23 @@ namespace $rootnamespace$
         /// <returns>The MIME type for the given file name.</returns>
         public static string GetMimeType(string fileName)
         {
-            string result = null;
-
             var dotIndex = fileName.LastIndexOf('.');
 
             if (dotIndex != -1 && fileName.Length > dotIndex + 1)
             {
-                TypeMap.TryGetValue(fileName.Substring(dotIndex + 1), out result);
+                string result;
+                if (TypeMap.TryGetValue(fileName.Substring(dotIndex + 1), out result))
+                {
+                    return result;
+                }
             }
 
-            return result ?? "application/octet-stream";
+            return "application/octet-stream";
         }
     }
 }
 <#+
-    private IList<Tuple<string, string>> GetMediaTypeList()
+    private static IList<Tuple<string, string>> GetMediaTypeList()
     {
         using (var client = new WebClient())
         {
@@ -59,21 +61,28 @@ namespace $rootnamespace$
         }
     }
 
-    private IEnumerable<Tuple<string, string>> GetMediaTypes(IEnumerable<string> lines)
+    private static IEnumerable<Tuple<string, string>> GetMediaTypes(IEnumerable<string> lines)
     {
-        return lines.Where(x => !x.StartsWith("#"))
+        var mediaTypes = lines.Where(x => !x.StartsWith("#"))
             .Select(line => SplitString(line, '\t', ' '))
             .SelectMany(CreateMediaTypes)
             .OrderBy(x => x.Item1);
+
+        return DistinctBy(mediaTypes, mediaType => mediaType.Item1, StringComparer.OrdinalIgnoreCase);
     }
 
-    private string[] SplitString(string line, params char[] separator)
+    private static string[] SplitString(string line, params char[] separator)
     {
         return line.Split(separator, StringSplitOptions.RemoveEmptyEntries);
     }
 
-    private IEnumerable<Tuple<string, string>> CreateMediaTypes(string[] parts)
+    private static IEnumerable<Tuple<string, string>> CreateMediaTypes(string[] parts)
     {
         return parts.Skip(1).Select(extension => Tuple.Create(extension, parts.First()));
+    }
+
+    private static IEnumerable<TSource> DistinctBy<TSource, TKey>(IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey> equalityComparer)
+    {
+        return source.GroupBy(keySelector, equalityComparer).Select(x => x.First());
     }
 #>

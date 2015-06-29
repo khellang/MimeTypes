@@ -763,7 +763,7 @@ namespace $rootnamespace$
                 { "stl", "application/vnd.ms-pki.stl" },
                 { "str", "application/vnd.pg.format" },
                 { "stw", "application/vnd.sun.xml.writer.template" },
-                { "sub", "text/vnd.dvb.subtitle" },
+                { "sub", "image/vnd.dvb.subtitle" },
                 { "sus", "application/vnd.sus-calendar" },
                 { "susp", "application/vnd.sus-calendar" },
                 { "sv4cpio", "application/x-sv4cpio" },
@@ -905,7 +905,7 @@ namespace $rootnamespace$
                 { "wmlsc", "application/vnd.wap.wmlscriptc" },
                 { "wmv", "video/x-ms-wmv" },
                 { "wmx", "video/x-ms-wmx" },
-                { "wmz", "application/x-msmetafile" },
+                { "wmz", "application/x-ms-wmz" },
                 { "woff", "application/font-woff" },
                 { "wpd", "application/vnd.wordperfect" },
                 { "wpl", "application/vnd.ms-wpl" },
@@ -1003,16 +1003,18 @@ namespace $rootnamespace$
         /// <returns>The MIME type for the given file name.</returns>
         public static string GetMimeType(string fileName)
         {
-            string result = null;
-
             var dotIndex = fileName.LastIndexOf('.');
 
             if (dotIndex != -1 && fileName.Length > dotIndex + 1)
             {
-                TypeMap.TryGetValue(fileName.Substring(dotIndex + 1), out result);
+                string result;
+                if (TypeMap.TryGetValue(fileName.Substring(dotIndex + 1), out result))
+                {
+                    return result;
+                }
             }
 
-            return result ?? "application/octet-stream";
+            return "application/octet-stream";
         }
     }
 }
