@@ -5,10 +5,17 @@ namespace $rootnamespace$
 {
     public static class MimeTypes
     {
+        /// <summary>
+        /// The fallback MIME-type. Defaults to <c>application/octet-stream</c>.
+        /// </summary>
+        public static string FallbackMimeType { get; set; }
+
         private static readonly Dictionary<string, string> TypeMap;
 
         static MimeTypes()
         {
+            FallbackMimeType = "application/octet-stream";
+
             TypeMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 { "123", "application/vnd.lotus-1-2-3" },
@@ -994,11 +1001,11 @@ namespace $rootnamespace$
         }
 
         /// <summary>
-        /// Gets the MIME type for the given file name,
-        /// or "application/octet-stream" if a mapping doesn't exist.
+        /// Gets the MIME-type for the given file name,
+        /// or <see cref="FallbackMimeType"/> if a mapping doesn't exist.
         /// </summary>
-        /// <param name="fileName">Name of the file.</param>
-        /// <returns>The MIME type for the given file name.</returns>
+        /// <param name="fileName">The name of the file.</param>
+        /// <returns>The MIME-type for the given file name.</returns>
         public static string GetMimeType(string fileName)
         {
             var dotIndex = fileName.LastIndexOf('.');
@@ -1012,7 +1019,7 @@ namespace $rootnamespace$
                 }
             }
 
-            return "application/octet-stream";
+            return FallbackMimeType;
         }
     }
 }

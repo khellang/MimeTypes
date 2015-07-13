@@ -10,6 +10,8 @@ Get the MIME/media type for a file name/extension by using the `MimeTypes.GetMim
 MimeTypes.GetMimeType("awesome-file.json"); // "application/json"
 ```
 
+If a mapping for the given file extension doesn't exist, it will fall back to `MimeTypes.FallbackMimeType`, which is set to `application/octet-stream` by default.
+
 ## Installation
 
 It's just a simple, generated .cs file! To get it, either
