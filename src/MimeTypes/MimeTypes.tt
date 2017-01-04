@@ -53,6 +53,16 @@ namespace $rootnamespace$
 
             return FallbackMimeType;
         }
+
+		/// <summary>
+        /// Verify the provided string is a valid MIME-type
+        /// </summary>
+        /// <param name="mimetype">The MIME-type to check</param>
+        /// <returns>MIME-type</returns>
+        public static string Validate(string mimetype)
+        {
+            return TypeMap.ContainsValue(mimetype) ? mimetype : FallbackMimeType;
+        }
     }
 }
 <#+
