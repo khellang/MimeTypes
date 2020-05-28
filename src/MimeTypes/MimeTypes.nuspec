@@ -8,7 +8,7 @@
     <owners>Kristian Hellang</owners>
     <license type="expression">Apache-2.0</license>
     <projectUrl>https://github.com/khellang/MimeTypes</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/khellang/MimeTypes/master/etc/nuget-icon.png</iconUrl>
+    <icon>images\nuget-icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A simple lookup from file name/extension to MIME/media type, generated from Apache's mime.types.</description>
     <copyright>Copyright © Kristian Hellang 2016</copyright>
@@ -21,5 +21,6 @@
   <files>
     <file src="MimeTypes.cs.pp" target="content" />
     <file src="MimeTypes.cs.pp" target="contentFiles\cs\any" />
+    <file src="..\..\etc\nuget-icon.png" target="images" />
   </files>
 </package>
