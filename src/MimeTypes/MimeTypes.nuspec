@@ -19,8 +19,9 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="MimeTypes.cs.pp" target="content" />
-    <file src="MimeTypes.cs.pp" target="contentFiles\cs\any" />
+    <file src="MimeTypes.NullableAttributes.cs.pp" target="contentFiles\cs\any" />
+    <file src="MimeTypes.cs.pp" target="contentFiles\cs\netstandard2.1" />
+    <file src="MimeTypes.cs.pp" target="contentFiles\cs\netcoreapp3.0" />
     <file src="..\..\etc\nuget-icon.png" target="images" />
   </files>
 </package>
