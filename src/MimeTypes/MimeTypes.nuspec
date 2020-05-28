@@ -6,7 +6,7 @@
     <title>MimeTypes.cs</title>
     <authors>Kristian Hellang</authors>
     <owners>Kristian Hellang</owners>
-    <licenseUrl>https://raw.githubusercontent.com/khellang/MimeTypes/master/LICENSE</licenseUrl>
+    <license type="expression">Apache-2.0</license>
     <projectUrl>https://github.com/khellang/MimeTypes</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/khellang/MimeTypes/master/etc/nuget-icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
