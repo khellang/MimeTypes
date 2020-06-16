@@ -5,7 +5,7 @@
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="MimeTypes.tt">
+    <None Update="MimeTypes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MimeTypes.cs.pp</LastGenOutput>
     </None>
