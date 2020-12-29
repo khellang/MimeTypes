@@ -1,6 +1,6 @@
 # MimeTypes
 
-A simple lookup from file name/extension to MIME/media type, generated from Apache's [mime.types](https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types).
+A simple lookup from file name/extension to MIME/media type, generated from [mime-db](https://github.com/jshttp/mime-db), which in turn is compiled from IANA, Apache and nginx's MIME types.
 
 ## Usage
 
