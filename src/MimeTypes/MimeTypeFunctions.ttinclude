@@ -35,7 +35,7 @@
     private static IEnumerable<(string Extension, string Type)> GetMediaTypes(IEnumerable<KeyValuePair<string, MimeType>> mimeTypes)
         => mimeTypes.Where(x => x.Value.Extensions.Any())
             .SelectMany(x => x.Value.Extensions.Select(e => (e, x.Key)))
-            .Where(x => x.Item1.All(char.IsLetterOrDigit))
+            .Where(x => x.Item1.Length <= 8 && x.Item1.All(char.IsLetterOrDigit))
             .GroupBy(x => x.Item1)
             .Select(x => x.First())
             .OrderBy(x => x.Item1, StringComparer.InvariantCulture);
