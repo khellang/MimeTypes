@@ -582,6 +582,7 @@ namespace $rootnamespace$
                 { "opf", "application/oebps-package+xml" },
                 { "opml", "text/x-opml" },
                 { "oprc", "application/vnd.palm" },
+                { "opus", "audio/ogg" },
                 { "org", "application/vnd.lotus-organizer" },
                 { "osf", "application/vnd.yamaha.openscoreformat" },
                 { "osfpvg", "application/vnd.yamaha.openscoreformat.osfpvg+xml" },
