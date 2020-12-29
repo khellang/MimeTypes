@@ -1,32 +1,43 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Net" #>
+<#@ import namespace="Newtonsoft.Json" #>
+<#@ assembly name="$(PkgNewtonsoft_Json)\lib\net45\Newtonsoft.Json.dll" #>
 <#@ assembly name="System.Core" #>
 <#+
+    private class MimeType
+    {
+        public MimeType()
+        {
+            Extensions = new List<string>();
+        }
+
+        public string Source { get; set; }
+
+        public List<string> Extensions { get; }
+
+        public bool Compressible { get; set; }
+
+        public string Charset { get; set; }
+    }
+
     private static IList<(string Extension, string Type)> GetMediaTypeList()
     {
         using var client = new WebClient();
 
-        var list = client.DownloadString(new Uri("http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types"));
-        var lines = SplitString(list, '\r', '\n');
+        var json = client.DownloadString(new Uri("https://cdn.jsdelivr.net/gh/jshttp/mime-db@master/db.json"));
 
-        return GetMediaTypes(lines).ToList();
+        var mimeTypes = JsonConvert.DeserializeObject<Dictionary<string, MimeType>>(json);
+
+        return GetMediaTypes(mimeTypes).ToList();
     }
 
-    private static IEnumerable<(string Extension, string Type)> GetMediaTypes(IEnumerable<string> lines)
-        => lines.Where(x => !x.StartsWith("#"))
-            .Select(line => SplitString(line, '\t', ' '))
-            .SelectMany(CreateMediaTypes)
-            .GroupBy(x => x.Extension)
-            .Where(x => x.Count() == 1)
-            .Select(x => x.Single())
-            .OrderBy(x => x.Extension, StringComparer.InvariantCulture);
-
-    private static string[] SplitString(string line, params char[] separator)
-        => line.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-
-    private static IEnumerable<(string Extension, string Type)> CreateMediaTypes(string[] parts)
-        => parts.Skip(1).Select(extension => (extension, parts[0]));
+    private static IEnumerable<(string Extension, string Type)> GetMediaTypes(IEnumerable<KeyValuePair<string, MimeType>> mimeTypes)
+        => mimeTypes.Where(x => x.Value.Extensions.Any())
+            .SelectMany(x => x.Value.Extensions.Select(e => (e, x.Key)))
+            .GroupBy(x => x.Item1)
+            .Select(x => x.First())
+            .OrderBy(x => x.Item1, StringComparer.InvariantCulture);
 
     public void GenerateClass(bool includeAttributes)
     {
