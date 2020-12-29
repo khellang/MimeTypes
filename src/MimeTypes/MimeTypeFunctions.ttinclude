@@ -20,7 +20,7 @@
             .GroupBy(x => x.Extension)
             .Where(x => x.Count() == 1)
             .Select(x => x.Single())
-            .OrderBy(x => x.Extension);
+            .OrderBy(x => x.Extension, StringComparer.InvariantCulture);
 
     private static string[] SplitString(string line, params char[] separator)
         => line.Split(separator, StringSplitOptions.RemoveEmptyEntries);
