@@ -7,6 +7,7 @@
 namespace $rootnamespace$
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
@@ -1187,6 +1188,21 @@ namespace $rootnamespace$
                 { "zirz", "application/vnd.zul" },
                 { "zmm", "application/vnd.handheld-entertainment+xml" },
             };
+        }
+
+        /// <summary>
+        /// Attempts to fetch all available file extensions for a MIME-type.
+        /// </summary>
+        /// <param name="mimeType">The name of the MIME-type</param>
+        /// <returns>All available extensions for the given MIME-type</returns>
+        public static IEnumerable<string> GetMimeTypeExtensions(string mimeType)
+        {
+            if (mimeType is null) throw new ArgumentNullException(nameof(mimeType));
+
+            mimeType = mimeType.ToLowerInvariant();
+            return s_typeMap
+                .Where(keyPair => keyPair.Value == mimeType)
+                .Select(keyPair => keyPair.Key);
         }
 
         /// <summary>
