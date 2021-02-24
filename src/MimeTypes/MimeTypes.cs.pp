@@ -1199,9 +1199,8 @@ namespace $rootnamespace$
         {
             if (mimeType is null) throw new ArgumentNullException(nameof(mimeType));
 
-            mimeType = mimeType.ToLowerInvariant();
             return s_typeMap
-                .Where(keyPair => keyPair.Value == mimeType)
+                .Where(keyPair => string.Equals(keyPair.Value, mimeType, StringComparison.OrdinalIgnoreCase))
                 .Select(keyPair => keyPair.Key);
         }
 
