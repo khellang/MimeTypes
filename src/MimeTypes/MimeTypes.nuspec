@@ -2,7 +2,7 @@
 <package>
   <metadata minClientVersion="3.3">
     <id>MimeTypes</id>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <title>MimeTypes.cs</title>
     <authors>Kristian Hellang</authors>
     <owners>Kristian Hellang</owners>
@@ -11,7 +11,7 @@
     <icon>images\nuget-icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A simple lookup from file name/extension to MIME/media type, generated from mime-db, which in turn is compiled from IANA, Apache and nginx's MIME types.</description>
-    <copyright>Copyright © Kristian Hellang 2020</copyright>
+    <copyright>Copyright © Kristian Hellang 2021</copyright>
     <developmentDependency>true</developmentDependency>
     <tags>mime mimetype mediatype file type extension</tags>
     <contentFiles>
