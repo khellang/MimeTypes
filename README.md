@@ -1,6 +1,7 @@
 # MimeTypes
 
-A simple lookup from file name/extension to MIME/media type and vice versa, generated from [mime-db](https://github.com/jshttp/mime-db), which in turn is compiled from IANA, Apache and nginx's MIME types.
+A simple lookup from file name/extension to MIME/media type and vice versa, generated from [mime-db](https://github.com/jshttp/mime-db), which in turn is compiled from IANA, Apache and nginx's MIME types.  
+This is a source-only package, containing a single class, `MimeTypes`, which will be compiled into your library/application under the root namespace.
 
 ## Installation
 
