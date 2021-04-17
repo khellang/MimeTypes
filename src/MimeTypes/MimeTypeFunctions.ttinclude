@@ -103,9 +103,8 @@ namespace $rootnamespace$
                 throw new ArgumentNullException(nameof(mimeType));
             }
 
-            mimeType = mimeType.ToLowerInvariant();
             return s_typeMap
-                .Where(keyPair => keyPair.Value == mimeType)
+                .Where(keyPair => string.Equal(keyPair.Value, mimeType, StringComparison.OrdinalIgnoreCase))
                 .Select(keyPair => keyPair.Key);
         }
 
