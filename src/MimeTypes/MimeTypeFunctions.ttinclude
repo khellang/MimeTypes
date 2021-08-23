@@ -50,12 +50,12 @@
 
 namespace $rootnamespace$
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.CompilerServices;
+    using global::System;
+    using global::System.Linq;
+    using global::System.Collections.Generic;
+    using global::System.Diagnostics;
+    using global::System.Diagnostics.CodeAnalysis;
+    using global::System.Runtime.CompilerServices;
 
     /// <summary>
     /// Provides utilities for mapping file names and extensions to MIME-types.
