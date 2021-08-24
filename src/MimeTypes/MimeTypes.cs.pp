@@ -1211,7 +1211,7 @@ namespace $rootnamespace$
             }
 
             return s_typeMap
-                .Where(keyPair => string.Equal(keyPair.Value, mimeType, StringComparison.OrdinalIgnoreCase))
+                .Where(keyPair => string.Equals(keyPair.Value, mimeType, StringComparison.OrdinalIgnoreCase))
                 .Select(keyPair => keyPair.Key);
         }
 
