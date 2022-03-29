@@ -1000,6 +1000,7 @@ namespace $rootnamespace$
                 { "txf", "application/vnd.mobius.txf" },
                 { "txt", "text/plain" },
                 { "u32", "application/x-authorware-bin" },
+                { "u3d", "model/u3d" },
                 { "u8dsn", "message/global-delivery-status" },
                 { "u8hdr", "message/global-headers" },
                 { "u8mdn", "message/global-disposition-notification" },
