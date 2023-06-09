@@ -109,6 +109,22 @@ namespace $rootnamespace$
         }
 
         /// <summary>
+        /// Attempts to validate MIME-type.
+        /// </summary>
+        /// <param name="mimeType">The name of the MIME-type</param>
+        /// <returns><c>true</c> if a MIME-type was found, <c>false</c> otherwise</returns>
+        public static bool IsValidMimeType(string mimeType)
+        {
+            if (mimeType is null)
+            {
+                throw new ArgumentNullException(nameof(mimeType));
+            }
+
+            return s_typeMap
+                .Any(keyPair => string.Equals(keyPair.Value, mimeType, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
         /// Tries to get the MIME-type for the given file name.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
