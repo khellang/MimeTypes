@@ -32,13 +32,14 @@
         return GetMediaTypes(mimeTypes).ToList();
     }
 
-    private static IEnumerable<(string Extension, string Type)> GetMediaTypes(IEnumerable<KeyValuePair<string, MimeType>> mimeTypes)
+    private static IList<(string Extension, string Type)> GetMediaTypes(IEnumerable<KeyValuePair<string, MimeType>> mimeTypes)
         => mimeTypes.Where(x => x.Value.Extensions.Any())
             .SelectMany(x => x.Value.Extensions.Select(e => (e, x.Key)))
             .Where(x => x.Item1.Length <= 8 && x.Item1.All(char.IsLetterOrDigit))
             .GroupBy(x => x.Item1)
             .Select(x => x.First())
-            .OrderBy(x => x.Item1, StringComparer.InvariantCulture);
+            .OrderBy(x => x.Item1, StringComparer.InvariantCulture)
+            .ToList();
 
     public void GenerateClass(bool includeAttributes)
     {
@@ -83,9 +84,13 @@ namespace $rootnamespace$
         {
             s_fallbackMimeType = DefaultFallbackMimeType;
 
-            s_typeMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+<#+
+    var mediaTypes = GetMediaTypeList();
+    var mediaTypesCount = mediaTypes.Count.ToString(System.Globalization.CultureInfo.InvariantCulture);
+#>
+            s_typeMap = new Dictionary<string, string>(<#= mediaTypesCount #>, StringComparer.OrdinalIgnoreCase)
             {
-        <#+ foreach (var mediaType in GetMediaTypeList()) { #>
+        <#+ foreach (var mediaType in mediaTypes) { #>
         { "<#= mediaType.Item1 #>", "<#= mediaType.Item2 #>" },
         <#+ } #>
     };
