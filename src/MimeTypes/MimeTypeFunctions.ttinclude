@@ -21,7 +21,48 @@
         public string Charset { get; set; }
     }
 
-    private static IList<(string Extension, string Type)> GetMediaTypeList()
+    private class Mapping
+    {
+        public Mapping(string mimeType, string source, string extension)
+        {
+            MimeType = mimeType;
+            Source = source ?? "custom";
+            Extension = extension;
+        }
+
+        public string MimeType { get; set; }
+
+        public string Source { get; set; }
+
+        public string Extension { get; set; }
+    }
+
+    private class SourceComparer : IComparer<string>
+    {
+        public static readonly SourceComparer Instance = new();
+
+        public int Compare(string x, string y)
+        {
+            if (string.Equals(x, y))
+            {
+                return 0;
+            }
+
+            if (x == "custom")
+            {
+                return 2;
+            }
+
+            if (x == "iana")
+            {
+                return 1;
+            }
+
+            return 0;
+        }
+    }
+
+    private static IList<Mapping> GetMediaTypeList()
     {
         using var client = new WebClient();
 
@@ -32,13 +73,14 @@
         return GetMediaTypes(mimeTypes).ToList();
     }
 
-    private static IList<(string Extension, string Type)> GetMediaTypes(IEnumerable<KeyValuePair<string, MimeType>> mimeTypes)
-        => mimeTypes.Where(x => x.Value.Extensions.Any())
-            .SelectMany(x => x.Value.Extensions.Select(e => (e, x.Key)))
-            .Where(x => x.Item1.Length <= 8 && x.Item1.All(char.IsLetterOrDigit))
-            .GroupBy(x => x.Item1)
-            .Select(x => x.First())
-            .OrderBy(x => x.Item1, StringComparer.InvariantCulture)
+    private static IList<Mapping> GetMediaTypes(IEnumerable<KeyValuePair<string, MimeType>> mimeTypes)
+        => mimeTypes
+            .SelectMany(x => x.Value.Extensions.Select(e => new Mapping(x.Key, x.Value.Source, e)))
+            .Where(x => x.Extension.Length <= 8 && x.Extension.All(char.IsLetterOrDigit))
+            .GroupBy(x => x.Extension)
+            // Prefer custom and IANA sources, then shorter mime types over longer ones
+            .Select(x => x.OrderByDescending(x => x.Source, SourceComparer.Instance).ThenBy(x => x.MimeType.Length).First())
+            .OrderBy(x => x.Extension, StringComparer.InvariantCulture)
             .ToList();
 
     public void GenerateClass(bool includeAttributes)
@@ -91,7 +133,7 @@ namespace $rootnamespace$
             s_typeMap = new Dictionary<string, string>(<#= mediaTypesCount #>, StringComparer.OrdinalIgnoreCase)
             {
         <#+ foreach (var mediaType in mediaTypes) { #>
-        { "<#= mediaType.Item1 #>", "<#= mediaType.Item2 #>" },
+        { "<#= mediaType.Extension #>", "<#= mediaType.MimeType #>" },
         <#+ } #>
     };
         }
