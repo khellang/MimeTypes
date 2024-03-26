@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,28 +8,30 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" PrivateAssets="All" GeneratePathProperty="True" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" PrivateAssets="All" GeneratePathProperty="True" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="MimeTypes.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MimeTypes.cs.pp</LastGenOutput>
-    </None>
     <None Update="MimeTypeFunctions.ttinclude" />
-    <None Update="MimeTypes.NullableAttributes.tt">
+
+    <None Update="MimeTypes.tt">
+      <LastGenOutput>MimeTypes.cs.pp</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MimeTypes.NullableAttributes.cs.pp</LastGenOutput>
-    </None>
-    <None Update="MimeTypes.NullableAttributes.cs.pp">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MimeTypes.NullableAttributes.tt</DependentUpon>
     </None>
     <None Update="MimeTypes.cs.pp">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>MimeTypes.tt</DependentUpon>
+    </None>
+
+    <None Update="MimeTypes.Nullable.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MimeTypes.Nullable.cs.pp</LastGenOutput>
+    </None>
+    <None Update="MimeTypes.Nullable.cs.pp">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MimeTypes.Nullable.tt</DependentUpon>
     </None>
   </ItemGroup>
 </Project>

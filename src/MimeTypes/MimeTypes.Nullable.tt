@@ -1,4 +1,4 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="MimeTypeFunctions.ttinclude" #>
 <#@ output extension=".cs.pp" encoding="utf-8" #>
-<# GenerateClass(nullability: false); #>
+<# GenerateClass(nullability: true); #>

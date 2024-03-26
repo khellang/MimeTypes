@@ -20,10 +20,11 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="MimeTypes.NullableAttributes.cs.pp" target="contentFiles\cs\netstandard2.0" />
-    <file src="MimeTypes.NullableAttributes.cs.pp" target="contentFiles\cs\net472" />
-    <file src="MimeTypes.cs.pp" target="contentFiles\cs\netstandard2.1" />
-    <file src="MimeTypes.cs.pp" target="contentFiles\cs\netcoreapp3.0" />
+    <file src="MimeTypes.cs.pp" target="contentFiles\cs\netstandard2.0" />
+    <file src="MimeTypes.cs.pp" target="contentFiles\cs\net472" />
+    <file src="MimeTypes.Nullable.cs.pp" target="contentFiles\cs\netstandard2.1" />
+    <file src="MimeTypes.Nullable.cs.pp" target="contentFiles\cs\netcoreapp3.0" />
+    <file src="MimeTypes.Nullable.cs.pp" target="contentFiles\cs\net5.0" />
     <file src="..\..\etc\nuget-icon.png" target="images" />
     <file src="..\..\README.md" target="docs\" />
   </files>
