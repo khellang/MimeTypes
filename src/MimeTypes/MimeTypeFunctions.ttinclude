@@ -78,10 +78,29 @@
             .SelectMany(x => x.Value.Extensions.Select(e => new Mapping(x.Key, x.Value.Source, e)))
             .Where(x => x.Extension.Length <= 8 && x.Extension.All(char.IsLetterOrDigit))
             .GroupBy(x => x.Extension)
-            // Prefer custom and IANA sources, then shorter mime types over longer ones
-            .Select(x => x.OrderByDescending(x => x.Source, SourceComparer.Instance).ThenBy(x => x.MimeType.Length).First())
+            .Select(GetExtension)
             .OrderBy(x => x.Extension, StringComparer.InvariantCulture)
             .ToList();
+
+    private static readonly Dictionary<string, string> Overrides = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        { "js", "application/javascript" },
+        { "xml", "application/xml" },
+    };
+
+    private static Mapping GetExtension(IGrouping<string, Mapping> mappings)
+    {
+        if (Overrides.TryGetValue(mappings.Key, out var @override))
+        {
+            return new Mapping(@override, "override", mappings.Key);
+        }
+
+        // Prefer custom and IANA sources, then shorter mime types over longer ones
+        return mappings
+            .OrderByDescending(x => x.Source, SourceComparer.Instance)
+            .ThenBy(x => x.MimeType.Length)
+            .First();
+    }
 
     public void GenerateClass(bool nullability)
     {
