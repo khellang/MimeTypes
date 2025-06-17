@@ -29,3 +29,11 @@ When calling `GetMimeType`, if a mapping for the given file extension doesn't ex
 ### Lookup file extension by MIME/media type
 
 To get all available file extensions for a MIME/media type, you can call `MimeTypes.GetMimeTypeExtensions`. This returns back an `IEnumerable<string>` of all the available files types for the specified MIME/media type.
+
+## Sponsors
+
+[Entity Framework Extensions](https://entityframework-extensions.net/?utm_source=khellang&utm_medium=MimeTypes) and [Dapper Plus](https://dapper-plus.net/?utm_source=khellang&utm_medium=MimeTypes) are major sponsors and proud to contribute to the development of MimeTypes.
+
+[![Entity Framework Extensions](https://raw.githubusercontent.com/khellang/khellang/refs/heads/master/.github/entity-framework-extensions-sponsor.png)](https://entityframework-extensions.net/bulk-insert?utm_source=khellang&utm_medium=MimeTypes)
+
+[![Dapper Plus](https://raw.githubusercontent.com/khellang/khellang/refs/heads/master/.github/dapper-plus-sponsor.png)](https://dapper-plus.net/bulk-insert?utm_source=khellang&utm_medium=MimeTypes)
